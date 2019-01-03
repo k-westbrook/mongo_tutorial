@@ -5,7 +5,7 @@ const path = require('path')
 const volleyball = require('volleyball')
 
 const app = express()
-const session = require('express-session');
+
 // logging middleware
 app.use(volleyball)
 
@@ -13,13 +13,6 @@ app.use(volleyball)
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-
-// Session middleware
-app.use(session({
-  secret: 'This is not a very secure secret...',
-  resave: false,
-  saveUninitialized: false
-}))
 
 
 // static middleware

@@ -12,7 +12,9 @@ class Root extends React.Component {
 
   render() {
     return (
-
+      <div>
+        <hi>hi</hi>
+      </div>
     )
   }
 }
