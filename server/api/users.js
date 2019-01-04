@@ -13,10 +13,9 @@ router.post('/newUser', async (req, res, next) => {
       lastName: lastName,
       email: email
     })
-    newUser.save(function (err) {
-      if (err) return handleError(err);
-      console.log("newUser is saved!")
-    });
+    newUser.save();
+    console.log(newUser, "USER")
+    res.json(newUser);
 
   } catch (err) {
     next(err)
@@ -28,7 +27,7 @@ router.get('/allUsers', async (req, res, next) => {
   try {
 
     const foundUsers = await User.find();
-    console.log(foundUsers)
+
     res.json(foundUsers);
 
   } catch (err) {
