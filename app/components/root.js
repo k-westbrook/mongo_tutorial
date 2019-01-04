@@ -10,7 +10,7 @@ class Root extends React.Component {
   }
 
   render() {
-
+    console.log(this.props.users)
     return (
       <div>
         <h1>Users</h1>

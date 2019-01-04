@@ -8,13 +8,13 @@ router.post('/newUser', async (req, res, next) => {
     const lastName = req.body.lastName;
     const email = req.body.email;
 
-    const newUser = new User({
+    const user = new User({
       firstName: firstName,
       lastName: lastName,
       email: email
     })
-    newUser.save();
-    console.log(newUser, "USER")
+    const newUser = await user.save();
+
     res.json(newUser);
 
   } catch (err) {
@@ -26,7 +26,7 @@ router.post('/newUser', async (req, res, next) => {
 router.get('/allUsers', async (req, res, next) => {
   try {
 
-    const foundUsers = await User.find();
+    const foundUsers = await User.find().exec();
 
     res.json(foundUsers);
 
