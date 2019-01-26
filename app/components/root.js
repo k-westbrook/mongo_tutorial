@@ -1,21 +1,39 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { getUsersFromServer, addUser } from '../reducers/userReducer'
+import { getUsersFromServer, addUser, removeUserThunk } from '../reducers/userReducer'
 import UserItem from './UserItem'
 
-class Root extends React.Component {
 
+class Root extends React.Component {
+  constructor() {
+    super()
+
+    this.handleRemove = this.handleRemove.bind(this);
+
+  }
   componentDidMount() {
     this.props.getUsers();
   }
 
+  handleRemove(id) {
+    this.props.handleRemove(id);
+  }
+
+
+
   render() {
-    console.log(this.props.users)
+
     return (
       <div>
         <h1>Users</h1>
         {this.props.users.map(user => {
-          return <UserItem user={user} key={user.id} />
+          return (
+            <div key={user._id}>
+              <button type='submit' onClick={() => this.handleRemove(user._id)}>X</button>
+
+              <UserItem user={user} />
+            </div>
+          )
 
         })}
 
@@ -60,6 +78,10 @@ const mapDispatchToProps = (dispatch) => {
       const email = evt.target.email.value;
 
       dispatch(addUser({ firstName, lastName, email }))
+    },
+    handleRemove(id) {
+
+      dispatch(removeUserThunk(id))
     }
 
   }

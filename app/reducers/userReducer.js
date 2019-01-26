@@ -1,9 +1,14 @@
 import axios from 'axios'
 
 
+
 //ACTION TYPE
 const GET_ALL_USERS = "GET_ALL_USERS"
 const ADD_USER = "ADD_USER"
+const REMOVE_USER = "REMOVE_USER"
+
+
+
 //ACTION CREATOR
 const getAllUsers = (users) => ({
 
@@ -14,6 +19,11 @@ const getAllUsers = (users) => ({
 const getAddedUser = (user) => ({
   type: ADD_USER,
   user
+})
+
+const removeUser = (_id) => ({
+  type: REMOVE_USER,
+  _id
 })
 
 
@@ -45,6 +55,18 @@ export const addUser = (user) => {
   }
 }
 
+export const removeUserThunk = (_id) => {
+  return async (dispatch) => {
+
+    const res = await axios.delete('/api/users/deleteUser/', { data: { _id } });
+
+    const data = res.data;
+
+    dispatch(removeUser(_id));
+  }
+}
+
+
 
 
 
@@ -55,7 +77,19 @@ const userReducer = (state = initialState, action) => {
       return { ...state, users: action.users }
     case ADD_USER:
       return { ...state, users: [...state.users, action.user] }
-
+    case REMOVE_USER:
+      {
+        let newArr = []
+        for (let i = 0; i < state.users.length; i++) {
+          if (state.users[i]._id !== action._id) {
+            newArr.push(state.users[i])
+          }
+        }
+        return {
+          ...state,
+          users: newArr
+        }
+      }
     default:
       return state
   }

@@ -35,4 +35,19 @@ router.get('/allUsers', async (req, res, next) => {
   }
 })
 
+
+router.delete('/deleteUser/', async (req, res, next) => {
+  try {
+    const { _id } = req.body
+    const deleteUser = await User.deleteOne({ _id }).exec();
+
+    res.json(deleteUser);
+
+  } catch (err) {
+    next(err)
+  }
+})
+
+
+
 module.exports = router;
